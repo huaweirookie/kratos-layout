@@ -8,6 +8,16 @@ import "google/protobuf/duration.proto";
 message Bootstrap {
   Server server = 1;
   Data data = 2;
+  Log log = 3;
+}
+
+// Log configures the slog JSON logger.
+message Log {
+  // Directory to write log files into, relative to the working directory.
+  // Empty disables file output.
+  string dir = 1;
+  // Minimum log level: DEBUG, INFO, WARN, ERROR. Empty means INFO.
+  string level = 2;
 }
 
 message Server {

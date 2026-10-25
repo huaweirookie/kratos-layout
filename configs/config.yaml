@@ -20,3 +20,10 @@ data:
     password: ${REDIS_PASSWORD:Redis@123456}
     read_timeout: 0.2s
     write_timeout: 0.2s
+
+log:
+  # Log directory, relative to the working directory. Logs are appended to
+  # <dir>/app.log in addition to stdout.
+  dir: ./logs
+  # Minimum log level: DEBUG, INFO, WARN, ERROR.
+  level: INFO

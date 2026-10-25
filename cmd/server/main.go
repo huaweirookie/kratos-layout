@@ -2,8 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"io"
 	"log/slog"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"kratos-layout/internal/conf"
 
@@ -49,20 +53,65 @@ func newApp(logger *slog.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 	)
 }
 
-func main() {
-	flag.Parse()
-	logger := log.NewLogger(
-		slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+// newLogger builds the JSON slog logger from config. It writes to stdout and,
+// when cfg.Dir is set, additionally appends to a file under that directory.
+func newLogger(cfg *conf.Log) (*slog.Logger, error) {
+	level := slog.LevelInfo
+	if cfg != nil && cfg.GetLevel() != "" {
+		var err error
+		if level, err = parseLevel(cfg.GetLevel()); err != nil {
+			return nil, err
+		}
+	}
+
+	w := io.Writer(os.Stdout)
+	if cfg != nil && cfg.GetDir() != "" {
+		file, err := openLogFile(cfg.GetDir())
+		if err != nil {
+			return nil, err
+		}
+		w = io.MultiWriter(os.Stdout, file)
+	}
+
+	return log.NewLogger(
+		slog.NewJSONHandler(w, &slog.HandlerOptions{
 			AddSource: true,
-			Level:     slog.LevelInfo,
+			Level:     level,
 		}),
 		log.WithExtractor(tracing.TraceAttrs),
 	).With(
 		slog.String("service.id", id),
 		slog.String("service.name", Name),
 		slog.String("service.version", Version),
-	)
-	log.SetDefault(logger)
+	), nil
+}
+
+// openLogFile ensures dir exists and opens app.log in append mode.
+func openLogFile(dir string) (*os.File, error) {
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return nil, fmt.Errorf("create log dir: %w", err)
+	}
+	return os.OpenFile(filepath.Join(dir, "app.log"), os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+}
+
+// parseLevel maps a config string to a slog.Level, case-insensitively.
+func parseLevel(s string) (slog.Level, error) {
+	switch strings.ToUpper(strings.TrimSpace(s)) {
+	case "DEBUG":
+		return slog.LevelDebug, nil
+	case "INFO":
+		return slog.LevelInfo, nil
+	case "WARN", "WARNING":
+		return slog.LevelWarn, nil
+	case "ERROR":
+		return slog.LevelError, nil
+	default:
+		return 0, fmt.Errorf("invalid log level %q (want DEBUG, INFO, WARN or ERROR)", s)
+	}
+}
+
+func main() {
+	flag.Parse()
 	c := config.New(
 		config.WithSource(
 			file.NewSource(flagconf),
@@ -79,6 +128,12 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	logger, err := newLogger(bc.Log)
+	if err != nil {
+		panic(err)
+	}
+	log.SetDefault(logger)
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
 	if err != nil {
