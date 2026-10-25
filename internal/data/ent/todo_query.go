@@ -5,14 +5,14 @@ package ent
 import (
 	"context"
 	"fmt"
+	"kratos-layout/internal/data/ent/predicate"
+	"kratos-layout/internal/data/ent/todo"
 	"math"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/predicate"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/todo"
 	"github.com/google/uuid"
 )
 

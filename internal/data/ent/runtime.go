@@ -3,11 +3,11 @@
 package ent
 
 import (
+	"kratos-layout/internal/biz"
+	"kratos-layout/internal/data/ent/schema"
+	"kratos-layout/internal/data/ent/todo"
 	"time"
 
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/schema"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/todo"
 	"github.com/google/uuid"
 )
 

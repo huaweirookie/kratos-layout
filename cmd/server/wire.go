@@ -8,11 +8,11 @@ package main
 import (
 	"log/slog"
 
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/conf"
-	"github.com/go-kratos/kratos-layout/internal/data"
-	"github.com/go-kratos/kratos-layout/internal/server"
-	"github.com/go-kratos/kratos-layout/internal/service"
+	"kratos-layout/internal/biz"
+	"kratos-layout/internal/conf"
+	"kratos-layout/internal/data"
+	"kratos-layout/internal/server"
+	"kratos-layout/internal/service"
 
 	"github.com/go-kratos/kratos/v3"
 	"github.com/google/wire"

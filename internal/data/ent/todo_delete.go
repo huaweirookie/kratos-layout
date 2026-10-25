@@ -4,12 +4,12 @@ package ent
 
 import (
 	"context"
+	"kratos-layout/internal/data/ent/predicate"
+	"kratos-layout/internal/data/ent/todo"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/predicate"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/todo"
 )
 
 // TodoDelete is the builder for deleting a Todo entity.

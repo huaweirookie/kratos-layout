@@ -1,9 +1,9 @@
 package server
 
 import (
-	v1 "github.com/go-kratos/kratos-layout/api/todo/v1"
-	"github.com/go-kratos/kratos-layout/internal/conf"
-	"github.com/go-kratos/kratos-layout/internal/service"
+	v1 "kratos-layout/api/todo/v1"
+	"kratos-layout/internal/conf"
+	"kratos-layout/internal/service"
 
 	"github.com/go-kratos/kratos/v3/middleware/recovery"
 	"github.com/go-kratos/kratos/v3/transport/grpc"

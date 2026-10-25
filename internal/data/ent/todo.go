@@ -4,13 +4,13 @@ package ent
 
 import (
 	"fmt"
+	"kratos-layout/internal/biz"
+	"kratos-layout/internal/data/ent/todo"
 	"strings"
 	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/todo"
 	"github.com/google/uuid"
 )
 

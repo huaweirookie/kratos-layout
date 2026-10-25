@@ -6,14 +6,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"kratos-layout/internal/biz"
+	"kratos-layout/internal/data/ent/predicate"
+	"kratos-layout/internal/data/ent/todo"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/predicate"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/todo"
 )
 
 // TodoUpdate is the builder for updating Todo entities.

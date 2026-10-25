@@ -3,11 +3,11 @@
 package todo
 
 import (
+	"kratos-layout/internal/biz"
+	"kratos-layout/internal/data/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/go-kratos/kratos-layout/internal/biz"
-	"github.com/go-kratos/kratos-layout/internal/data/ent/predicate"
 	"github.com/google/uuid"
 )
 
